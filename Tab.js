@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, TouchableOpacity, Animated, FlatList, Dimension
 import PropTypes from 'prop-types';
 
 import Colors from './Colors';
-import { onChange } from 'react-native-reanimated';
 
 const width = Dimensions.get('window').width;
 
@@ -14,7 +13,7 @@ const Tab = forwardRef(({ item, onItemPress, active, idx }, ref) => {
     fadeAnim.setValue(0);
     Animated.timing(fadeAnim, {
       toValue: 1,
-      duration: 300,
+      duration: 150,
       useNativeDriver: false,
     }).start();
   };
@@ -80,7 +79,7 @@ const Indicator = ({ data, measures, scrollX }) => {
 };
 
 function SnyTab(props) {
-  const { options, Swipe, step, onChange } = props;
+  const { options, Swipe, step, onChange, Smooth } = props;
   const [idx, setIdx] = useState(step || 0);
   const scrollX = useRef(new Animated.Value(0)).current;
   const ref = useRef();
@@ -122,7 +121,7 @@ function SnyTab(props) {
         onMomentumScrollEnd={onScrollEnd}
         initialScrollIndex={idx}
         bounces={false}
-        // snapToInterval={width}
+        snapToInterval={Smooth && width}
         keyExtractor={keyExtractor}
         renderItem={renderItemFlatList}
         onEndReachedThreshold={0.1}
@@ -137,6 +136,7 @@ SnyTab.propTypes = {
   Swipe: PropTypes.bool,
   onChange: PropTypes.func,
   step: PropTypes.number,
+  Smooth: PropTypes.bool,
 };
 
 SnyTab.defaultProps = {

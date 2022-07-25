@@ -127,7 +127,7 @@ export default class SnyModal extends Component {
           onBackdropPress={onDismiss}
           onSwipeComplete={onDismiss}
           onModalHide={onDismiss}
-          onSwipeThreshold={50}
+          onSwipeThreshold={100}
           swipeDirection="down"
           propagateSwipe
           isVisible={visible}
