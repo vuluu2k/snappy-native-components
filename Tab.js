@@ -1,5 +1,5 @@
 import React, { useState, useRef, createRef, forwardRef, useEffect, useCallback } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Animated, FlatList, Dimensions, findNodeHandle } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Animated, FlatList, Dimensions } from 'react-native';
 import PropTypes from 'prop-types';
 
 import Colors from './Colors';
@@ -13,7 +13,7 @@ const Tab = forwardRef(({ item, onItemPress, active, idx }, ref) => {
     fadeAnim.setValue(0);
     Animated.timing(fadeAnim, {
       toValue: 1,
-      duration: 500,
+      duration: 300,
       useNativeDriver: false,
     }).start();
   };
@@ -108,7 +108,7 @@ function SnyTab(props) {
   return (
     <>
       <Tabs data={data} scrollX={scrollX} onItemPress={onItemPress} idx={idx} />
-      <FlatList
+      <Animated.FlatList
         data={data}
         ref={ref}
         horizontal
@@ -119,8 +119,11 @@ function SnyTab(props) {
         onMomentumScrollEnd={onScrollEnd}
         initialScrollIndex={idx}
         bounces={false}
+        // snapToInterval={width}
         keyExtractor={keyExtractor}
         renderItem={renderItemFlatList}
+        onEndReachedThreshold={0.1}
+        keyboardShouldPersistTaps="handled"
       />
     </>
   );
