@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Animated, FlatList, Dimension
 import PropTypes from 'prop-types';
 
 import Colors from './Colors';
+import { onChange } from 'react-native-reanimated';
 
 const width = Dimensions.get('window').width;
 
@@ -79,7 +80,7 @@ const Indicator = ({ data, measures, scrollX }) => {
 };
 
 function SnyTab(props) {
-  const { options, Swipe, step } = props;
+  const { options, Swipe, step, onChange } = props;
   const [idx, setIdx] = useState(step || 0);
   const scrollX = useRef(new Animated.Value(0)).current;
   const ref = useRef();
@@ -88,13 +89,15 @@ function SnyTab(props) {
       offset: itemIndex * width,
     });
     setIdx(itemIndex);
+    onChange && onChange(options[itemIndex]);
   });
 
   const onScrollEnd = e => {
     let contentOffset = e.nativeEvent.contentOffset;
     let viewSize = e.nativeEvent.layoutMeasurement;
-    let pageNum = Math.floor(contentOffset.x / viewSize.width);
-    setIdx(pageNum);
+    let itemIndex = Math.floor(contentOffset.x / viewSize.width);
+    setIdx(itemIndex);
+    onChange && onChange(options[itemIndex]);
   };
 
   const renderItemFlatList = ({ item }) => {
@@ -132,6 +135,8 @@ function SnyTab(props) {
 SnyTab.propTypes = {
   options: PropTypes.array,
   Swipe: PropTypes.bool,
+  onChange: PropTypes.func,
+  step: PropTypes.number,
 };
 
 SnyTab.defaultProps = {
