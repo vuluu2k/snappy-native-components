@@ -94,7 +94,7 @@ function SnyTab(props) {
   const onScrollEnd = e => {
     let contentOffset = e.nativeEvent.contentOffset;
     let viewSize = e.nativeEvent.layoutMeasurement;
-    let itemIndex = Math.floor(contentOffset.x / viewSize.width);
+    let itemIndex = Math.round(contentOffset.x / viewSize.width);
     setIdx(itemIndex);
     onChange && onChange(options[itemIndex]);
   };

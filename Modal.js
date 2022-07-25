@@ -143,6 +143,7 @@ export default class SnyModal extends Component {
         statusBarTranslucent
         transparent
         hardwareAccelerated
+        backdropTransitionOutTiming={0}
         onRequestClose={() => {
           this.revertAnimatedColor(onDismiss);
         }}
